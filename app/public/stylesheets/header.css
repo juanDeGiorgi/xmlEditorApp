@@ -1,0 +1,36 @@
+body {
+  background-color: #6c757d;
+}
+
+/* navBar */
+
+.navbar-nav {
+  font-size: 1.3em;
+}
+
+.nav-item:hover {
+  background-color: #6c757d1a;
+}
+
+.container-auth-options {
+  border-top: 1px solid grey;
+  padding: 10px 0px;
+}
+
+.navBar-custom {
+  justify-content: space-between;
+  text-align: center;
+}
+
+@media (min-width: 720px) {
+  /* navBar */
+
+  .navbar-nav {
+    font-size: 1.2em;
+  }
+
+  .container-auth-options {
+    border: none;
+    padding: 0px;
+  }
+}
