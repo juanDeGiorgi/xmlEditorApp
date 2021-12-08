@@ -19,23 +19,28 @@
   </head>
   <body class="login">
     <main>
-      <form class="form-login">
+      <form class="form-login" action="/auth/login" method="POST">
         <div class="form-header">
           <h1 class="form-brand">Xml Editor App</h1>
         </div>
         <div class="form-main">
           <div class="mb-3 container-input">
-            <label for="user" class="form-label">Usuario</label>
+            <label for="username" class="form-label">Usuario</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
-              id="user"
-              aria-describedby="emailHelp"
+              id="username"
+              name="username"
             />
           </div>
           <div class="mb-3 container-input">
             <label for="password" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="password" />
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+            />
             <button id="eye-pass" class="eye-pass pass-off" value="0"></button>
           </div>
           <div>

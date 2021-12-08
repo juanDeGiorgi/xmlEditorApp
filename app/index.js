@@ -1,10 +1,14 @@
 require('dotenv').config();
 
+// module dependencies
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const passport = require('passport');
+const session = require('express-session');
+const passportConfig = require('./src/middlewares/passportConfig');
 
 const indexRouter = require('./src/routes');
 
@@ -19,6 +23,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// session config
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+// passport config
+app.use(passport.initialize());
+app.use(passport.session());
+passportConfig();
 
 // handler routes
 app.use(indexRouter);

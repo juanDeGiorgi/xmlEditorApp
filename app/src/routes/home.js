@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const controller = require('../controllers/home');
 
-router.get('/', controller.home);
+// middleware de autenticacion
+const auth = require('../middlewares/auth');
+
+router.get('/', auth.isAuthenticated, controller.home);
 
 module.exports = router;

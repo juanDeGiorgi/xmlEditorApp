@@ -1,7 +1,12 @@
 const login = (req, res) => {
-  res.status(200).render('login.ejs');
+  return res.status(200).render('login.ejs');
+};
+
+const processLogin = async (req, res) => {
+  return res.redirect('/');
 };
 
 module.exports = {
   login,
+  processLogin,
 };
