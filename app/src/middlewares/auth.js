@@ -1,10 +1,21 @@
 const passport = require('passport');
 
 // loggea al usuario usando la estrategia configurada
-const authenticate = () => {
-  passport.authenticate('local', {
-    failureRedirect: '/auth/login',
-  });
+const authenticate = (req, res, next) => {
+  passport.authenticate('local', (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.render('login', { error: 'Credenciales invalidas' });
+    }
+    return req.logIn(user, (errLogin) => {
+      if (errLogin) {
+        return next(err);
+      }
+      return next();
+    });
+  })(req, res, next);
 };
 
 // verifica si hay un usuario autenticado

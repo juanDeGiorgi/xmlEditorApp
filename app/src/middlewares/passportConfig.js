@@ -5,7 +5,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const passportConfig = () => {
   passport.use(
     new LocalStrategy((username, password, done) => {
-      if (username === 'test' && password === '123') {
+      if (username === 'test' && password === 'test2021') {
         return done(null, { id: '1', userName: 'test' });
       }
       return done(null, false);

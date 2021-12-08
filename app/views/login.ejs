@@ -44,10 +44,12 @@
             <button id="eye-pass" class="eye-pass pass-off" value="0"></button>
           </div>
           <div>
-            <p class="error is-invalid">
-              Credenciales invalidas
+            <%if(locals.error){%>
+            <p class="is-invalid">
+              <%=locals.error%>
               <img src="/images/error.svg" alt="error" width="6%" />
             </p>
+            <%}%>
           </div>
           <button type="submit" class="btn btn-primary submit-button">
             Iniciar Sesión
