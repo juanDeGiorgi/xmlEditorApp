@@ -1,0 +1,110 @@
+.login .form-login {
+  width: 90%;
+  background-color: white;
+  margin: 50px auto;
+  box-shadow: 0px 4px 10px 1px rgb(70 64 64);
+  max-width: 288px;
+}
+
+.login .form-login .form-header {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+  color: white;
+  text-align: center;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login .form-login .form-header .form-brand {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.login .form-login .form-main {
+  padding: 0px 15px 15px 15px;
+  margin-top: 15px;
+}
+
+.login .form-login .form-main .container-input {
+  min-height: 90px;
+  position: relative;
+}
+
+.login .form-login .submit-button {
+  text-align: center;
+  margin: auto;
+  display: block;
+  width: 60%;
+}
+
+/* error al loggearse */
+.error {
+  display: none;
+}
+
+.is-invalid {
+  color: red;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* mostrar contraseña */
+
+.login .eye-pass {
+  position: absolute;
+  background: none;
+  border: none;
+  color: rgba(0, 0, 0, 0);
+  top: 35px;
+  right: 3px;
+  width: 40px;
+  height: 30px;
+}
+
+.login .pass-on {
+  background-image: url(../images/eye-solid-open.svg);
+  background-repeat: no-repeat;
+  background-position: right calc(0.075em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.775rem) calc(3.45em + 1.575rem);
+}
+
+.login .pass-off {
+  background-image: url(../images/eye-solid-close.svg);
+  background-repeat: no-repeat;
+  background-position: right calc(0.075em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.775rem) calc(3.45em + 1.575rem);
+}
+
+@media (min-width: 768px) {
+  .login .form-login {
+    width: 50%;
+    max-width: 384px;
+  }
+
+  /* mostrar contraseña */
+
+  .login .eye-pass {
+    top: 34.2px;
+    right: 4.5px;
+    width: 37.2px;
+    height: 34.6px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .login .form-login {
+    width: 40%;
+    max-width: 384px;
+  }
+
+  /* mostrar contraseña */
+
+  .login .eye-pass {
+    top: 33.4px;
+    right: 4.8px;
+    width: 38.9px;
+    height: 33.5px;
+  }
+}
