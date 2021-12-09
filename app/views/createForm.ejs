@@ -26,9 +26,9 @@
           <label for="name" class="form-label">Nombre</label>
           <input
             type="text"
-            class="form-control <%=locals.errors && errors.name ? 'is-invalid' : null%>"
-            id="name"
-            name="name"
+            class="form-control <%=locals.errors && errors.Name ? 'is-invalid' : null%>"
+            id="Name"
+            name="Name"
             placeholder="Ejemplo : Torsión1"
           />
           <div
@@ -36,7 +36,7 @@
             class="invalid-feedback"
             style="min-height: 22px; display: block"
           >
-            <%=locals.errors && errors.name ? errors.name.msg : null%>
+            <%=locals.errors && errors.Name ? errors.Name.msg : null%>
           </div>
         </div>
         <div class="mb-3">

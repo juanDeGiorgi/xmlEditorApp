@@ -5,13 +5,13 @@ const validateFields = (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.render('createForm', { errors: errors.mapped() });
   }
-  next();
+  return next();
 };
 
 const validationCreate = [
-  check('name', 'el nombre es obligatorio').notEmpty(),
+  check('Name', 'el nombre es obligatorio').notEmpty(),
   check(
-    'name',
+    'Name',
     'el nombre no puede contener caracteres especiales'
   ).isAlphanumeric('en-US', { ignore: '´' }),
 

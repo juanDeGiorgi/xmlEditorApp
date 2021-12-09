@@ -1,10 +1,9 @@
-require('dotenv').config();
-
+const fs = require('fs');
+const path = require('path');
 const { DOMParser } = require('xmldom');
 const XmlWriter = require('xml-writer');
 const { XMLHttpRequest } = require('xmlhttprequest');
-const fs = require('fs');
-const path = require('path');
+const s3 = require('./awsS3');
 
 // lee el xml desde el bucket en AWS y lo retorna
 const readXml = async () => {
@@ -22,12 +21,19 @@ const readXml = async () => {
   return xml;
 };
 
-// recibe un xml y lo guarda en la carpeta temporal temp antes de subirlo al bucket
-const saveXml = (xml) => {
+// recibe un xml y lo guarda en la carpeta temporal temp y lo sube al bucket
+const saveXml = async (xml) => {
   const fileName = 'modelos.xml';
   const filePath = path.join(__dirname, '..', 'temp', fileName);
 
-  fs.writeFileSync(filePath, xml, 'utf-8');
+  try {
+    fs.writeFileSync(filePath, xml, 'utf-8');
+    await s3.uploadToBucket(filePath);
+
+    return false;
+  } catch (err) {
+    return err;
+  }
 };
 
 // recibe un array de nodos y actualiza el xml con la nueva informacion
@@ -44,15 +50,17 @@ const updateXml = (nodes) => {
   nodes.forEach((node) => {
     xmlDoc
       .startElement('Nodes')
-      .writeElement('Name', node.name)
+      .writeElement('Name', node.Name)
       .writeElement('OBJName', node.OBJName)
-      .writeElement('Scale', node.scale)
+      .writeElement('Scale', node.Scale)
       .endElement();
   });
 
   xmlDoc.endElement();
 
-  saveXml(xmlDoc.toString());
+  const error = saveXml(xmlDoc.toString());
+
+  return error;
 };
 
 // recibe el xml, lo transforma en un array de nodos y lo retorna
@@ -66,7 +74,7 @@ const serializeXml = (xml) => {
   // recorro el domNodes, combierto cada nodo en un objeto y lo almaceno en un array
   for (let i = 0; i < domNodes.length; i += 1) {
     nodes.push({
-      name: domNodes[i].getElementsByTagName('Name')[0].textContent,
+      Name: domNodes[i].getElementsByTagName('Name')[0].textContent,
       OBJName: domNodes[i].getElementsByTagName('OBJName')[0].textContent,
       Scale: domNodes[i].getElementsByTagName('Scale')[0].textContent,
     });
@@ -75,11 +83,12 @@ const serializeXml = (xml) => {
   return nodes;
 };
 
-const addNodeToXml = ({ Name, OBJName, Scale }) => {
-  const xml = readXml();
+// lee de nuevo el xml ,extrae todos los nodos , agrega un nuevo nodo y retorna un array con todos los nodos
+const addNodeToXml = async (newNode) => {
+  const xml = await readXml();
   const allNodes = serializeXml(xml);
 
-  allNodes.push({ Name, OBJName, Scale });
+  allNodes.push(newNode);
 
   return allNodes;
 };
