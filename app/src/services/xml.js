@@ -1,7 +1,10 @@
 require('dotenv').config();
 
 const { XMLHttpRequest } = require('xmlhttprequest');
-const Xmldom = require('xmldom').DOMParser;
+const { DOMParser } = require('xmldom');
+const XmlWriter = require('xml-writer');
+const fs = require('fs');
+const path = require('path');
 
 // lee el xml desde el bucket en AWS y lo retorna
 const readXml = async () => {
@@ -23,10 +26,43 @@ const readXml = async () => {
   return xml;
 };
 
+// recibe un xml y lo guarda en la carpeta temporal temp antes de subirlo al bucket
+const saveXml = (xml) => {
+  const fileName = 'modelos.xml';
+  const filePath = path.join(__dirname, '..', 'temp', fileName);
+
+  fs.writeFileSync(filePath, xml, 'utf-8');
+};
+
+// recibe un array de nodos y actualiza el xml con la nueva informacion
+const updateXml = (nodes) => {
+  const xmlDoc = new XmlWriter();
+
+  xmlDoc.startDocument('1.0', 'UTF-8');
+
+  xmlDoc
+    .startElement('Thumbnails')
+    .writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
+    .writeAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
+
+  nodes.forEach((node) => {
+    xmlDoc
+      .startElement('Nodes')
+      .writeElement('Name', node.name)
+      .writeElement('OBJName', node.OBJName)
+      .writeElement('Scale', node.scale)
+      .endElement();
+  });
+
+  xmlDoc.endElement();
+
+  saveXml(xmlDoc.toString());
+};
+
 // recibe el xml, lo transforma en un array de nodos y lo retorna
-const serialize = (xml) => {
+const serializeXml = (xml) => {
   // parseo el xml a un objeto del dom y selecciono los nodos que hay dentro
-  const doc = new Xmldom().parseFromString(xml, 'application/xml');
+  const doc = new DOMParser().parseFromString(xml, 'application/xml');
   const domNodes = doc.getElementsByTagName('Nodes');
 
   const nodes = [];
@@ -45,5 +81,7 @@ const serialize = (xml) => {
 
 module.exports = {
   readXml,
-  serialize,
+  serializeXml,
+  saveXml,
+  updateXml,
 };

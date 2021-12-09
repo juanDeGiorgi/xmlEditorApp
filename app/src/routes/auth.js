@@ -4,7 +4,7 @@ const controller = require('../controllers/auth');
 // middleware de autenticacion
 const auth = require('../middlewares/auth');
 
-/* auth routes. */
+// auth router (maneja las rutas de authenticacion)
 router.get('/login', controller.login);
 router.post('/login', auth.authenticate, controller.processLogin);
 router.get('/logOut', controller.logOut);
