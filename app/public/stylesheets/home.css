@@ -1,0 +1,29 @@
+.home .main-home {
+  padding: 20px;
+}
+
+.home .container-nodos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.home .main-home .container-nodos-title {
+  margin-bottom: 30px;
+}
+
+.home .card-nodo {
+  padding: 15px;
+  width: 300px;
+  margin: 20px 5px;
+}
+
+.home .card-nodo .edit-button {
+  margin: 10px 0px 15px 0px;
+}
+
+@media (min-width: 768px) {
+  .home .main-home {
+    padding: 40px;
+  }
+}

@@ -19,7 +19,52 @@
   </head>
   <body class="home">
     <%- include('./partials/header') %>
-    <main></main>
+    <main class="main-home">
+      <h1 class="container-nodos-title">Nodos :</h1>
+      <div class="container-nodos">
+        <%locals.nodos.forEach(nodo => {%>
+        <div class="card card-nodo">
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              disabled
+              value="<%=nodo.name%>"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="OBJname" class="form-label">Archivo</label>
+            <input
+              type="text"
+              class="form-control"
+              id="OBJName"
+              name="OBJName"
+              disabled
+              value="<%=nodo.OBJName%>"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="scale" class="form-label">Escala</label>
+            <input
+              type="text"
+              class="form-control"
+              id="scale"
+              name="scale"
+              disabled
+              value="<%=nodo.scale%>"
+            />
+          </div>
+
+          <a href="#" class="btn btn-primary edit-button">Editar</a>
+        </div>
+        <%})%>
+      </div>
+    </main>
     <footer></footer>
     <!-- boostrap -->
     <script
