@@ -26,39 +26,51 @@
           <label for="name" class="form-label">Nombre</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control <%=locals.errors && errors.name ? 'is-invalid' : null%>"
             id="name"
             name="name"
             placeholder="Ejemplo : Torsión1"
           />
-          <div id="nameError" class="invalid-feedback">
-            Please choose a username.
+          <div
+            id="nameError"
+            class="invalid-feedback"
+            style="min-height: 22px; display: block"
+          >
+            <%=locals.errors && errors.name ? errors.name.msg : null%>
           </div>
         </div>
         <div class="mb-3">
           <label for="OBJName" class="form-label">Archivo</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control <%=locals.errors && errors.OBJName ? 'is-invalid' : null%>"
             id="OBJName"
             name="OBJName"
             placeholder="Ejemplo : torsion_1"
           />
-          <div id="OBJNameError" class="invalid-feedback">
-            Please choose a username.
+          <div
+            id="OBJNameError"
+            class="invalid-feedback"
+            style="min-height: 22px; display: block"
+          >
+            <%=locals.errors && errors.OBJName ? errors.OBJName.msg : null%>
           </div>
         </div>
         <div class="mb-3">
-          <label for="scale" class="form-label">escala</label>
+          <label for="Scale" class="form-label">escala</label>
           <input
             type="text"
-            class="form-control"
-            id="scale"
-            name="scale"
+            class="form-control <%=locals.errors && errors.scale ? 'is-invalid' : null%>"
+            id="Scale"
+            name="Scale"
             placeholder="Ejemplo : 1.2"
           />
-          <div id="scaleError" class="invalid-feedback">
-            Please choose a username.
+          <div
+            id="scaleError"
+            class="invalid-feedback"
+            style="min-height: 22px; display: block"
+          >
+            <%=locals.errors && errors.Scale ? errors.Scale.msg : null%>
           </div>
         </div>
 

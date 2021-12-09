@@ -1,8 +1,8 @@
 require('dotenv').config();
 
-const { XMLHttpRequest } = require('xmlhttprequest');
 const { DOMParser } = require('xmldom');
 const XmlWriter = require('xml-writer');
+const { XMLHttpRequest } = require('xmlhttprequest');
 const fs = require('fs');
 const path = require('path');
 
@@ -11,11 +11,7 @@ const readXml = async () => {
   let xml;
   const xhttp = new XMLHttpRequest();
 
-  xhttp.open(
-    'GET',
-    'https://test2021anotherpolitestudio.s3.sa-east-1.amazonaws.com/modelos.xml',
-    false
-  );
+  xhttp.open('GET', process.env.BUCKET_XML, false);
 
   xhttp.addEventListener('load', () => {
     xml = xhttp.responseText;
@@ -72,11 +68,20 @@ const serializeXml = (xml) => {
     nodes.push({
       name: domNodes[i].getElementsByTagName('Name')[0].textContent,
       OBJName: domNodes[i].getElementsByTagName('OBJName')[0].textContent,
-      scale: domNodes[i].getElementsByTagName('Scale')[0].textContent,
+      Scale: domNodes[i].getElementsByTagName('Scale')[0].textContent,
     });
   }
 
   return nodes;
+};
+
+const addNodeToXml = ({ Name, OBJName, Scale }) => {
+  const xml = readXml();
+  const allNodes = serializeXml(xml);
+
+  allNodes.push({ Name, OBJName, Scale });
+
+  return allNodes;
 };
 
 module.exports = {
@@ -84,4 +89,5 @@ module.exports = {
   serializeXml,
   saveXml,
   updateXml,
+  addNodeToXml,
 };
