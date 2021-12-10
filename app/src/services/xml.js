@@ -29,6 +29,7 @@ const saveXml = async (xml) => {
   try {
     fs.writeFileSync(filePath, xml, 'utf-8');
     await s3.uploadToBucket(filePath);
+    fs.unlinkSync(filePath);
 
     return false;
   } catch (err) {
@@ -37,7 +38,7 @@ const saveXml = async (xml) => {
 };
 
 // recibe un array de nodos y actualiza el xml con la nueva informacion
-const updateXml = (nodes) => {
+const updateXml = async (nodes) => {
   const xmlDoc = new XmlWriter();
 
   xmlDoc.startDocument('1.0', 'UTF-8');
@@ -58,7 +59,7 @@ const updateXml = (nodes) => {
 
   xmlDoc.endElement();
 
-  const error = saveXml(xmlDoc.toString());
+  const error = await saveXml(xmlDoc.toString());
 
   return error;
 };
@@ -93,10 +94,37 @@ const addNodeToXml = async (newNode) => {
   return allNodes;
 };
 
+const findNode = async (nodeIndex) => {
+  const xml = await readXml();
+  const nodes = serializeXml(xml);
+
+  const node = nodes[nodeIndex];
+  node.index = nodeIndex;
+
+  return node;
+};
+
+const editNode = async (nodeToEdit, nodeIndex) => {
+  const xml = await readXml();
+  const nodes = serializeXml(xml);
+
+  nodes.forEach((node, index) => {
+    if (index === +nodeIndex) {
+      node.Name = nodeToEdit.Name;
+      node.OBJName = nodeToEdit.OBJName;
+      node.Scale = nodeToEdit.Scale;
+    }
+  });
+
+  return updateXml(nodes);
+};
+
 module.exports = {
   readXml,
   serializeXml,
   saveXml,
   updateXml,
   addNodeToXml,
+  findNode,
+  editNode,
 };

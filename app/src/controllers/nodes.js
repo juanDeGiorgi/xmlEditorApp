@@ -6,25 +6,41 @@ const create = (req, res) => {
 };
 
 const processCreate = async (req, res, next) => {
-  const { Name, OBJName, Scale } = req.body;
-  const newNode = { Name, OBJName, Scale };
+  const newNode = req.body;
 
   const Allnodes = await xmlService.addNodeToXml(newNode);
   const error = await xmlService.updateXml(Allnodes);
 
   if (error) {
-    console.log(error);
     return next(createError(error));
   }
 
   return res.redirect('/');
 };
 
-const edit = (req, res) => {
-  res.status(200).render('editForm.ejs');
+const edit = async (req, res, next) => {
+  const nodeIndex = req.params.id;
+  const node = await xmlService.findNode(nodeIndex);
+
+  if (node) {
+    return res.status(200).render('editForm.ejs', { node });
+  }
+
+  return next(createError(404));
 };
 
-const processEdit = (req, res) => {};
+const processEdit = async (req, res) => {
+  const nodeToEdit = req.body;
+  const nodeIndex = req.params.id;
+
+  const error = await xmlService.editNode(nodeToEdit, nodeIndex);
+
+  if (error) {
+    return next(createError(error));
+  }
+
+  return res.redirect('/');
+};
 
 module.exports = {
   create,

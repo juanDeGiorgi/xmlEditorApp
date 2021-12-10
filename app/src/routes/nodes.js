@@ -14,7 +14,7 @@ router.post(
   controller.processCreate
 );
 
-router.get('/edit', auth.isAuthenticated, controller.edit);
-router.put('/edit', auth.isAuthenticated, controller.processEdit);
+router.get('/edit/:id', auth.isAuthenticated, controller.edit);
+router.put('/edit/:id', auth.isAuthenticated, controller.processEdit);
 
 module.exports = router;

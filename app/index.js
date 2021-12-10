@@ -8,6 +8,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
+const methodOverride = require('method-override');
+
 const passportConfig = require('./src/middlewares/passportConfig');
 
 const indexRouter = require('./src/routes');
@@ -20,6 +22,7 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));

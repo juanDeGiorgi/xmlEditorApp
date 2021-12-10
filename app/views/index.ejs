@@ -22,7 +22,7 @@
     <main class="main-home">
       <h1 class="container-nodos-title">Nodos :</h1>
       <div class="container-nodos">
-        <%locals.nodos.forEach(nodo => {%>
+        <%locals.nodos.forEach((nodo,index) => {%>
         <div class="card card-nodo">
           <div class="mb-3">
             <label for="name" class="form-label">Nombre</label>
@@ -60,7 +60,9 @@
             />
           </div>
 
-          <a href="#" class="btn btn-primary edit-button">Editar</a>
+          <a href="/nodes/edit/<%=index%>" class="btn btn-primary edit-button"
+            >Editar</a
+          >
         </div>
         <%})%>
       </div>

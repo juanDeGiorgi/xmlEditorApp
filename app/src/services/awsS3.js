@@ -15,38 +15,6 @@ const getBucket = async () => {
   return data.Buckets[0].Name;
 };
 
-const makeToPublicXml = (Bucket) => {
-  const params = {
-    Bucket,
-    Key: 'modelos.xml',
-    AccessControlPolicy: {
-      Owner: {
-        DisplayName: 'Owner',
-        ID: process.env.AWS_CANONICAL_ID,
-      },
-      Grants: [
-        {
-          Grantee: {
-            Type: 'CanonicalUser',
-            DisplayName: 'Owner',
-            ID: process.env.AWS_CANONICAL_ID,
-          },
-          Permission: 'FULL_CONTROL',
-        },
-        {
-          Grantee: {
-            Type: 'Group',
-            URI: 'http://acs.amazonaws.com/groups/global/AllUsers',
-          },
-          Permission: 'READ',
-        },
-      ],
-    },
-  };
-
-  return storage.putObjectAcl(params).promise();
-};
-
 const uploadToBucket = async (filePath) => {
   const stream = fs.createReadStream(filePath);
 
@@ -55,12 +23,12 @@ const uploadToBucket = async (filePath) => {
     Bucket,
     Key: 'modelos.xml',
     Body: stream,
+    ACL: 'public-read',
+    ContentType: 'txt/xml',
   };
 
   try {
-    await storage.upload(params).promise();
-
-    return makeToPublicXml(Bucket);
+    return storage.putObject(params).promise();
   } catch (err) {
     return err;
   }
