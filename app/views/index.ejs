@@ -20,7 +20,13 @@
   <body class="home">
     <%- include('./partials/header') %>
     <main class="main-home">
+      <%if(!locals.nodos || nodos.length === 0 ){%>
+      <div class="alert alert-danger" role="alert">
+        <h4>Error no se a podido establecer la conexión con el Bucket</h4>
+      </div>
+      <%}else {%>
       <h1 class="container-nodos-title">Nodos :</h1>
+
       <div class="container-nodos">
         <%locals.nodos.forEach((nodo,index) => {%>
         <div class="card card-nodo">
@@ -66,6 +72,7 @@
         </div>
         <%})%>
       </div>
+      <%}%>
     </main>
     <footer></footer>
     <!-- boostrap -->

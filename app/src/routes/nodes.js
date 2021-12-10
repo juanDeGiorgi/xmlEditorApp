@@ -10,11 +10,16 @@ router.get('/create', auth.isAuthenticated, controller.create);
 router.post(
   '/create',
   auth.isAuthenticated,
-  validator.validationCreate,
+  validator.validatidate,
   controller.processCreate
 );
 
 router.get('/edit/:id', auth.isAuthenticated, controller.edit);
-router.put('/edit/:id', auth.isAuthenticated, controller.processEdit);
+router.put(
+  '/edit/:id',
+  auth.isAuthenticated,
+  validator.validatidate,
+  controller.processEdit
+);
 
 module.exports = router;

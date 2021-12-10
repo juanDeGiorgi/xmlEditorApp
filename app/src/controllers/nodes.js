@@ -2,7 +2,7 @@ const createError = require('http-errors');
 const xmlService = require('../services/xml');
 
 const create = (req, res) => {
-  res.status(200).render('createForm.ejs');
+  res.render('createForm.ejs');
 };
 
 const processCreate = async (req, res, next) => {
@@ -23,13 +23,13 @@ const edit = async (req, res, next) => {
   const node = await xmlService.findNode(nodeIndex);
 
   if (node) {
-    return res.status(200).render('editForm.ejs', { node });
+    return res.render('editForm.ejs', { node });
   }
 
   return next(createError(404));
 };
 
-const processEdit = async (req, res) => {
+const processEdit = async (req, res, next) => {
   const nodeToEdit = req.body;
   const nodeIndex = req.params.id;
 

@@ -99,7 +99,10 @@ const findNode = async (nodeIndex) => {
   const nodes = serializeXml(xml);
 
   const node = nodes[nodeIndex];
-  node.index = nodeIndex;
+
+  if (node) {
+    node.index = nodeIndex;
+  }
 
   return node;
 };
@@ -108,13 +111,13 @@ const editNode = async (nodeToEdit, nodeIndex) => {
   const xml = await readXml();
   const nodes = serializeXml(xml);
 
-  nodes.forEach((node, index) => {
-    if (index === +nodeIndex) {
-      node.Name = nodeToEdit.Name;
-      node.OBJName = nodeToEdit.OBJName;
-      node.Scale = nodeToEdit.Scale;
+  for (let i = 0; i < nodes.length; i += 1) {
+    if (i === +nodeIndex) {
+      nodes[i].Name = nodeToEdit.Name;
+      nodes[i].OBJName = nodeToEdit.OBJName;
+      nodes[i].Scale = nodeToEdit.Scale;
     }
-  });
+  }
 
   return updateXml(nodes);
 };

@@ -8,7 +8,7 @@ const validateFields = (req, res, next) => {
   return next();
 };
 
-const validationCreate = [
+const validatidate = [
   check('Name', 'el nombre es obligatorio').notEmpty(),
   check(
     'Name',
@@ -26,6 +26,6 @@ const validationCreate = [
 ];
 
 module.exports = {
-  validationCreate,
+  validatidate,
   validateFields,
 };
