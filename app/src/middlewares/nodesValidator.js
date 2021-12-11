@@ -2,8 +2,14 @@ const { check, validationResult } = require('express-validator');
 
 const validateFields = (req, res, next) => {
   const errors = validationResult(req);
+  const view = req.originalUrl.includes('create') ? 'createForm' : 'editForm';
+  const node = {
+    id: req.params.id,
+    ...req.body,
+  };
+  console.log(node);
   if (!errors.isEmpty()) {
-    return res.render('createForm', { errors: errors.mapped() });
+    return res.render(view, { errors: errors.mapped(), node });
   }
   return next();
 };

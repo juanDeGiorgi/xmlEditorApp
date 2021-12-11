@@ -22,7 +22,7 @@
     <main class="create-main">
       <form
         class="create-form"
-        action="/nodes/edit/<%=node.index%>?_method=PUT"
+        action="/nodes/edit/<%=node.id%>?_method=PUT"
         method="POST"
       >
         <h1 class="create-title">Editar nodo :</h1>
@@ -66,7 +66,7 @@
           <label for="Scale" class="form-label">escala</label>
           <input
             type="text"
-            class="form-control <%=locals.errors && errors.scale ? 'is-invalid' : null%>"
+            class="form-control <%=locals.errors && errors.Scale ? 'is-invalid' : null%>"
             id="Scale"
             name="Scale"
             placeholder="Ejemplo : 1.2"

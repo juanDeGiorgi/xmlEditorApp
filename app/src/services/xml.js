@@ -75,6 +75,7 @@ const serializeXml = (xml) => {
   // recorro el domNodes, combierto cada nodo en un objeto y lo almaceno en un array
   for (let i = 0; i < domNodes.length; i += 1) {
     nodes.push({
+      id: i,
       Name: domNodes[i].getElementsByTagName('Name')[0].textContent,
       OBJName: domNodes[i].getElementsByTagName('OBJName')[0].textContent,
       Scale: domNodes[i].getElementsByTagName('Scale')[0].textContent,
@@ -94,25 +95,21 @@ const addNodeToXml = async (newNode) => {
   return allNodes;
 };
 
-const findNode = async (nodeIndex) => {
+const findNode = async (id) => {
   const xml = await readXml();
   const nodes = serializeXml(xml);
 
-  const node = nodes[nodeIndex];
-
-  if (node) {
-    node.index = nodeIndex;
-  }
+  const node = nodes[id];
 
   return node;
 };
 
-const editNode = async (nodeToEdit, nodeIndex) => {
+const editNode = async (nodeToEdit, id) => {
   const xml = await readXml();
   const nodes = serializeXml(xml);
 
   for (let i = 0; i < nodes.length; i += 1) {
-    if (i === +nodeIndex) {
+    if (i === +id) {
       nodes[i].Name = nodeToEdit.Name;
       nodes[i].OBJName = nodeToEdit.OBJName;
       nodes[i].Scale = nodeToEdit.Scale;

@@ -12,7 +12,7 @@ const storage = new S3({
 const getBucket = async () => {
   const data = await storage.listBuckets().promise();
 
-  return data.Buckets[1].Name;
+  return data.Buckets[0].Name;
 };
 
 const uploadToBucket = async (filePath) => {

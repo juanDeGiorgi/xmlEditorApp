@@ -30,6 +30,7 @@
             id="Name"
             name="Name"
             placeholder="Ejemplo : Torsión1"
+            value="<%=locals.node ? node.Name : null%>"
           />
           <div
             id="nameError"
@@ -47,6 +48,7 @@
             id="OBJName"
             name="OBJName"
             placeholder="Ejemplo : torsion_1"
+            value="<%=locals.node ? node.OBJName : null%>"
           />
           <div
             id="OBJNameError"
@@ -64,6 +66,7 @@
             id="Scale"
             name="Scale"
             placeholder="Ejemplo : 1.2"
+            value="<%=locals.node ? node.Scale : null%>"
           />
           <div
             id="scaleError"

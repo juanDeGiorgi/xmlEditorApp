@@ -19,8 +19,8 @@ const processCreate = async (req, res, next) => {
 };
 
 const edit = async (req, res, next) => {
-  const nodeIndex = req.params.id;
-  const node = await xmlService.findNode(nodeIndex);
+  const { id } = req.params;
+  const node = await xmlService.findNode(id);
 
   if (node) {
     return res.render('editForm.ejs', { node });
@@ -31,9 +31,9 @@ const edit = async (req, res, next) => {
 
 const processEdit = async (req, res, next) => {
   const nodeToEdit = req.body;
-  const nodeIndex = req.params.id;
+  const { id } = req.params;
 
-  const error = await xmlService.editNode(nodeToEdit, nodeIndex);
+  const error = await xmlService.editNode(nodeToEdit, id);
 
   if (error) {
     return next(createError(error));
