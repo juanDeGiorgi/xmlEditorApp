@@ -6,6 +6,8 @@ const auth = require('../middlewares/auth');
 const validator = require('../middlewares/nodesValidator');
 
 // node router (maneja las rutas de la entidad "nodes")
+router.get('/modelos', controller.getXml);
+
 router.get('/create', auth.isAuthenticated, controller.create);
 router.post(
   '/create',

@@ -1,6 +1,13 @@
 const createError = require('http-errors');
 const xmlService = require('../services/xml');
 
+const getXml = async (req, res) => {
+  const xml = await xmlService.readXml();
+
+  res.type('application/xml');
+  res.send(xml);
+};
+
 const create = (req, res) => {
   res.render('createForm.ejs');
 };
@@ -43,6 +50,7 @@ const processEdit = async (req, res, next) => {
 };
 
 module.exports = {
+  getXml,
   create,
   processCreate,
   processEdit,
