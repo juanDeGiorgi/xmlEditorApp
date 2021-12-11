@@ -29,7 +29,7 @@ const uploadToBucket = async (filePath) => {
   };
 
   try {
-    return storage.putObject(params).promise();
+    return storage.upload(params).promise();
   } catch (err) {
     return err;
   }
