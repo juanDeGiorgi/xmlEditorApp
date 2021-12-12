@@ -19,7 +19,12 @@
   </head>
   <body class="login">
     <main>
-      <form class="form-login" action="/auth/login" method="POST">
+      <form
+        id="formLogin"
+        class="form-login"
+        action="/auth/login"
+        method="POST"
+      >
         <div class="form-header">
           <h1 class="form-brand">Xml Editor App</h1>
         </div>
@@ -32,6 +37,7 @@
               id="username"
               name="username"
             />
+            <p id="errorUser" class="is-invalid-login"></p>
           </div>
           <div class="mb-3 container-input">
             <label for="password" class="form-label">Contraseña</label>
@@ -41,6 +47,7 @@
               id="password"
               name="password"
             />
+            <p id="errorPass" class="is-invalid-login"></p>
             <button id="eye-pass" class="eye-pass pass-off" value="0"></button>
           </div>
           <div>
@@ -51,7 +58,11 @@
             </p>
             <%}%>
           </div>
-          <button type="submit" class="btn btn-primary submit-button">
+          <button
+            id="submit-login"
+            type="submit"
+            class="btn btn-primary submit-button"
+          >
             Iniciar Sesión
           </button>
         </div>
