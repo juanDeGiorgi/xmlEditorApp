@@ -1,11 +1,18 @@
 const createError = require('http-errors');
 const xmlService = require('../services/xml');
+const s3Service = require('../services/aws');
 
-const getXml = async (req, res) => {
-  const xml = await xmlService.readXml();
+// maneja las respuestas del servidor para la entidad de "nodes"
 
-  res.type('application/xml');
-  res.send(xml);
+const getXml = async (req, res, next) => {
+  try {
+    const xml = await s3Service.getXml();
+
+    res.type('application/xml');
+    res.send(xml);
+  } catch (err) {
+    next(err);
+  }
 };
 
 const create = (req, res) => {
@@ -13,40 +20,54 @@ const create = (req, res) => {
 };
 
 const processCreate = async (req, res, next) => {
-  const newNode = req.body;
+  try {
+    const newNode = req.body;
 
-  const Allnodes = await xmlService.addNodeToXml(newNode);
-  const error = await xmlService.updateXml(Allnodes);
+    const Allnodes = await xmlService.addNodeToXml(newNode);
+    const error = await xmlService.updateXml(Allnodes);
 
-  if (error) {
-    return next(createError(error));
+    if (error) {
+      return next(createError(error));
+    }
+
+    return res.redirect('/');
+  } catch (err) {
+    return next(err);
   }
-
-  return res.redirect('/');
 };
 
 const edit = async (req, res, next) => {
-  const { id } = req.params;
-  const node = await xmlService.findNode(id);
+  try {
+    const { id } = req.params;
+    const node = await xmlService.findNode(id);
 
-  if (node) {
-    return res.render('editForm.ejs', { node });
+    if (node) {
+      return res.render('editForm.ejs', { node });
+    }
+
+    const error = new Error('nodo no encontrado');
+    error.status = 404;
+    return next(error);
+  } catch (err) {
+    return next(err);
   }
-
-  return next(createError(404));
 };
 
 const processEdit = async (req, res, next) => {
-  const nodeToEdit = req.body;
-  const { id } = req.params;
+  try {
+    const nodeToEdit = req.body;
+    const { id } = req.params;
 
-  const error = await xmlService.editNode(nodeToEdit, id);
+    const error = await xmlService.editNode(nodeToEdit, id);
 
-  if (error) {
-    return next(createError(error));
+    if (error) {
+      return next(createError(error));
+    }
+
+    return res.redirect('/');
+  } catch (err) {
+    return next(err);
   }
-
-  return res.redirect('/');
 };
 
 module.exports = {

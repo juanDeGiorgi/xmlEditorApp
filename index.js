@@ -43,23 +43,25 @@ app.use(passport.initialize());
 app.use(passport.session());
 passportConfig();
 
-// handler routes
+// routes handler
 app.use(indexRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  return next(createError(404));
+  const err = new Error('Pagina no encontrada');
+  err.status = 404;
+  return next(err);
 });
 
 // error handler
-app.use((err, req, res) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
+app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.render('error');
+  const error = {
+    message: err.message || 'Error interno en el servidor',
+    status: err.status || 500,
+    stack: req.app.get('env') === 'development' ? err.stack : '',
+  };
+  res.render('error.ejs', { error });
 });
 
 module.exports = app;

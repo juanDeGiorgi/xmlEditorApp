@@ -2,33 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const { DOMParser } = require('xmldom');
 const XmlWriter = require('xml-writer');
-const { XMLHttpRequest } = require('xmlhttprequest');
-const s3 = require('./awsS3');
-
-// lee el xml desde el bucket en AWS y lo retorna
-const readXml = async () => {
-  let xml;
-  const xhttp = new XMLHttpRequest();
-
-  xhttp.open('GET', process.env.BUCKET_XML, false);
-
-  xhttp.addEventListener('load', () => {
-    xml = xhttp.responseText;
-  });
-
-  xhttp.send();
-
-  return xml;
-};
+const s3Service = require('./aws');
 
 // recibe un xml y lo guarda en la carpeta temporal temp y lo sube al bucket
 const saveXml = async (xml) => {
-  const fileName = 'modelos.xml';
-  const filePath = path.join(__dirname, '..', 'temp', fileName);
-
   try {
+    const fileName = 'modelos.xml';
+    const filePath = path.join(__dirname, '..', 'temp', fileName);
+
     fs.writeFileSync(filePath, xml, 'utf-8');
-    await s3.uploadToBucket(filePath);
+
+    await s3Service.uploadToBucket(filePath);
     fs.unlinkSync(filePath);
 
     return false;
@@ -59,9 +43,9 @@ const updateXml = async (nodes) => {
 
   xmlDoc.endElement();
 
-  const error = await saveXml(xmlDoc.toString());
+  const result = await saveXml(xmlDoc.toString());
 
-  return error;
+  return result;
 };
 
 // recibe el xml, lo transforma en un array de nodos y lo retorna
@@ -87,7 +71,7 @@ const serializeXml = (xml) => {
 
 // lee de nuevo el xml ,extrae todos los nodos , agrega un nuevo nodo y retorna un array con todos los nodos
 const addNodeToXml = async (newNode) => {
-  const xml = await readXml();
+  const xml = await s3Service.getXml();
   const allNodes = serializeXml(xml);
 
   allNodes.push(newNode);
@@ -95,8 +79,9 @@ const addNodeToXml = async (newNode) => {
   return allNodes;
 };
 
+// busca un nodo dentro del xml y lo retorna
 const findNode = async (id) => {
-  const xml = await readXml();
+  const xml = await s3Service.getXml();
   const nodes = serializeXml(xml);
 
   const node = nodes[id];
@@ -104,8 +89,9 @@ const findNode = async (id) => {
   return node;
 };
 
+// recibe el nodo y su id lo edita y guarda el xml
 const editNode = async (nodeToEdit, id) => {
-  const xml = await readXml();
+  const xml = await s3Service.getXml();
   const nodes = serializeXml(xml);
 
   for (let i = 0; i < nodes.length; i += 1) {
@@ -120,7 +106,6 @@ const editNode = async (nodeToEdit, id) => {
 };
 
 module.exports = {
-  readXml,
   serializeXml,
   saveXml,
   updateXml,

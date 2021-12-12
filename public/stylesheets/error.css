@@ -1,0 +1,29 @@
+.error-page {
+  text-align: center;
+}
+
+.error-page .error-status {
+  font-size: 40vw;
+}
+
+.error-page .error-message {
+  font-size: 8.8vw;
+}
+
+.error-page .error-text {
+  font-size: 8.8vw;
+}
+
+@media (min-width: 768px) {
+  .error-page .error-status {
+    font-size: 10vw;
+  }
+
+  .error-page .error-message {
+    font-size: 3vw;
+  }
+
+  .error-page .error-text {
+    font-size: 2vw;
+  }
+} ;
