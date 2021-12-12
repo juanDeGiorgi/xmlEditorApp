@@ -2,8 +2,8 @@ window.addEventListener('load', () => {
   const Name = $('Name');
   const OBJName = $('OBJName');
   const Scale = $('Scale');
-  const form = $('formCreate');
-  const submit = $('submit-create');
+  const form = $('form-edit');
+  const submit = $('submit-edit');
 
   const regexp = /^\d+\.\d{0,2}$/;
 
@@ -24,7 +24,7 @@ window.addEventListener('load', () => {
   // validaciones front
 
   Name.addEventListener('keyup', (e) => {
-    if (Name.value === '') {
+    if (Name.value.trim() === '') {
       $('nameError').innerHTML = 'El nombre es obligatorio';
       Name.classList.add('is-invalid');
       submit.setAttribute('disabled', null);
@@ -41,7 +41,7 @@ window.addEventListener('load', () => {
   });
 
   OBJName.addEventListener('keyup', (e) => {
-    if (OBJName.value === '') {
+    if (OBJName.value.trim() === '') {
       $('OBJNameError').innerHTML = 'El nombre del archivo es obligatorio';
       OBJName.classList.add('is-invalid');
       submit.setAttribute('disabled', null);
@@ -53,7 +53,7 @@ window.addEventListener('load', () => {
   });
 
   Scale.addEventListener('keyup', (e) => {
-    if (Scale.value === '') {
+    if (Scale.value.trim() === '') {
       $('scaleError').innerHTML = 'La escala es obligatoria';
       Scale.classList.add('is-invalid');
       submit.setAttribute('disabled', null);
@@ -73,7 +73,7 @@ window.addEventListener('load', () => {
     e.preventDefault();
 
     // input Namename
-    if (Name.value === '') {
+    if (Name.value.trim() === '') {
       $('nameError').innerHTML = 'El nombre es obligatorio';
       Name.classList.add('is-invalid');
       submit.setAttribute('disabled', null);

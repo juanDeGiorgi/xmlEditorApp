@@ -21,6 +21,7 @@
     <%- include('./partials/header.ejs')%>
     <main class="create-main">
       <form
+        id="form-edit"
         class="create-form"
         action="/nodes/edit/<%=node.id%>?_method=PUT"
         method="POST"
@@ -82,7 +83,11 @@
         </div>
 
         <div class="container-form-buttons">
-          <button type="submit" class="btn btn-primary create-button">
+          <button
+            id="submit-edit"
+            type="submit"
+            class="btn btn-primary create-button"
+          >
             Guardar
           </button>
           <a href="/" class="btn btn-danger">Cancelar</a>
@@ -97,5 +102,8 @@
       crossorigin="anonymous"
     ></script>
     <!-- boostrap -->
+
+    <script src="/javascripts/index.js"></script>
+    <script src="/javascripts/edit.js"></script>
   </body>
 </html>

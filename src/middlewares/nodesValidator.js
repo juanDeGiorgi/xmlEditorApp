@@ -7,7 +7,6 @@ const validateFields = (req, res, next) => {
     id: req.params.id,
     ...req.body,
   };
-  console.log(node);
   if (!errors.isEmpty()) {
     return res.render(view, { errors: errors.mapped(), node });
   }
