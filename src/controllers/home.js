@@ -7,7 +7,7 @@ const home = async (req, res, next) => {
     const xml = await s3Service.getXml();
     const nodos = xmlService.serializeXml(xml);
   
-    return res.status(200).render('index.ejs', { nodos });
+    return res.status(200).render('home.ejs', { nodos });
     
   } catch (err) {
     console.log(err);

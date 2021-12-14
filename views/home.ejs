@@ -66,9 +66,16 @@
             />
           </div>
 
-          <a href="/nodes/edit/<%=index%>" class="btn btn-primary edit-button"
-            >Editar</a
-          >
+          <div class="container-card-butons">
+            <a href="/nodes/edit/<%=index%>" class="btn btn-primary options-buttons"
+              >Editar</a
+            >
+
+            <form id="deleteForm<%=nodo.id%>" action="/nodes/delete/<%=nodo.id%>?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-danger options-buttons">Eliminar</button>
+            </form>
+          </div>
+
         </div>
         <%})%>
       </div>
@@ -82,5 +89,12 @@
       crossorigin="anonymous"
     ></script>
     <!-- boostrap -->
+
+    <!-- sweetAlert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- sweetAlert -->
+
+    <script src="/javascripts/index.js"></script>
+    <script src="/javascripts/home.js"></script>
   </body>
 </html>

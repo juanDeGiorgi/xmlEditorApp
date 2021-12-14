@@ -104,6 +104,19 @@ const editNode = async (nodeToEdit, id) => {
   return updateXml(nodes);
 };
 
+const deleteNode = async (id) => {
+  try {
+    const xml = await s3Service.getXml();
+    const nodes = serializeXml(xml);
+  
+    const nodesUpdated = nodes.filter(node => node.id !== +id);
+  
+    return updateXml(nodesUpdated);    
+  } catch (err) {
+    return err;
+  }
+};
+
 module.exports = {
   serializeXml,
   saveXml,
@@ -111,4 +124,5 @@ module.exports = {
   addNodeToXml,
   findNode,
   editNode,
+  deleteNode
 };

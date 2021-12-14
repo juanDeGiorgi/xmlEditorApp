@@ -70,10 +70,22 @@ const processEdit = async (req, res, next) => {
   }
 };
 
+const deleteNode = async (req, res, next) => {
+  try {
+    const id = req.params.id; 
+    await xmlService.deleteNode(id);
+
+    return res.redirect('/');
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   getXml,
   create,
   processCreate,
   processEdit,
   edit,
+  deleteNode
 };

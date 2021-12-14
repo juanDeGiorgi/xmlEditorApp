@@ -24,4 +24,6 @@ router.put(
   controller.processEdit
 );
 
+router.delete('/delete/:id', auth.isAuthenticated, controller.deleteNode)
+
 module.exports = router;
