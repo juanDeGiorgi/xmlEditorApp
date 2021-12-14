@@ -1,27 +1,25 @@
 
 window.addEventListener('load',() => {
-    const deleteButton = $('deleteHomeButton');
+    const deleteForms = document.getElementsByTagName('form');
 
-    // for (let i = 0; i < array.length; i++) {
-    //   const deleteForm = $('deleteForm');  
-  
-    //   deleteForm.addEventListener('submit',(e) => {
-    //     e.preventDefault();
-    
-    //     Swal.fire({
-    //         title: 'Estas seguro que quieres borrar este nodo ?',
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#0d6efd',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Si estoy seguro',
-    //         cancelButtonText: 'cancelar'
-    //       }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             deleteForm.submit();
-    //         }
-    //     })
-    //   })
-    // }
+    for (let i = 0; i < deleteForms.length; i++) {
+      deleteForms[i].addEventListener('submit',(e) => {
+          e.preventDefault();
+      
+          Swal.fire({
+              title: 'Estas seguro que quieres Eliminar este nodo ?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#0d6efd',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Si estoy seguro',
+              cancelButtonText: 'cancelar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                deleteForms[i].submit();
+              }
+          })
+        })
+    }
 
 })
