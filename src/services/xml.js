@@ -13,7 +13,6 @@ const saveXml = async (xml) => {
     fs.writeFileSync(filePath, xml, 'utf-8');
 
     await s3Service.uploadToBucket(filePath);
-    fs.unlinkSync(filePath);
 
     return false;
   } catch (err) {

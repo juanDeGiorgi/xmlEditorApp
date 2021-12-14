@@ -21,7 +21,7 @@ const getXml = async () => {
 
     return data.Body.toString('utf-8');
   } catch (err) {
-    return err;
+    throw new Error(err);
   }
 };
 
